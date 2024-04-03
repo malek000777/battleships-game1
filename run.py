@@ -1,5 +1,6 @@
 import random  # Import the random module
 
+
 # Function to create a grid
 def create_grid(size):
     return [['O' for _ in range(size)] for _ in range(size)]
@@ -58,15 +59,23 @@ def play_battleships(grid_size, num_ships):
 
     while attempts < 5:  # Max 5 attempts
         # Player's turn
-        guess = input("Enter your guess (row column): ").split()
-        if len(guess) != 2:
-            print("Invalid input. Please enter row and column numbers.")
-            continue
+        while True:
+            guess = input("Enter your guess (row column): ").split()
+            if len(guess) != 2:
+                print("Please enter row and column numbers.")
+                continue
 
-        x, y = map(int, guess)
-        if not is_valid_guess((x, y), grid_size, guessed_cells):
-            print("Invalid guess. Please enter a valid cell.")
-            continue
+            # Check if both inputs are digits
+            if not guess[0].isdigit() or not guess[1].isdigit():
+                print("Please enter numbers for row and column.")
+                continue
+
+            x, y = map(int, guess)
+            if not is_valid_guess((x, y), grid_size, guessed_cells):
+                print("Invalid guess. Please enter a valid cell.")
+                continue
+
+            break
 
         attempts += 1
         guessed_cells.add((x, y))
